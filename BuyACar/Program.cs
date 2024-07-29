@@ -1,4 +1,7 @@
+using BuyACar.Data;
+using BuyACar.Repositories;
 using BuyACar.Services;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,7 +12,13 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddSingleton<ICarService, CarService>();
+builder.Services.AddDbContext<BuyACarContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// Services and repositories
+builder.Services.AddTransient<ICarService, CarService>();
+builder.Services.AddScoped<ICarRepository, CarRepository>();
+
 
 var app = builder.Build();
 

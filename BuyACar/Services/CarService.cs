@@ -1,15 +1,21 @@
 ﻿using BuyACar.Models;
+using BuyACar.Repositories;
 
 namespace BuyACar.Services
 {
     public class CarService : ICarService
     {
-        public CarService() { }
-
-        public Car? GetCar()
+        private readonly ICarRepository _carRepository;
+        public CarService(ICarRepository carRepository)
         {
-            Car car = new Car("Skoda Enyaq");
-            return car;
+            _carRepository = carRepository;
+        }
+
+
+        public Car? GetCarById(int id)
+        {
+            return _carRepository.GetCarById(id);
+
         }
     }
 }

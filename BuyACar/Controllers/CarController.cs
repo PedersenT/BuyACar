@@ -20,9 +20,9 @@ namespace BuyACar.Controllers
         }
 
         [HttpGet(Name = "GetCar")]
-        public Results<Ok<Car>, NotFound> Get()
+        public Results<Ok<Car>, NotFound> GetCarById(int id)
         {
-            var car = _carService.GetCar();
+            var car = _carService.GetCarById(id);
             return car == null ? TypedResults.NotFound() : TypedResults.Ok(car);
         }
 
