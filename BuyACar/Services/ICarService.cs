@@ -4,6 +4,6 @@ namespace BuyACar.Services
 {
     public interface ICarService
     {
-        public Car? GetCar();
+        public Car? GetCarById(int id);
     }
 }
