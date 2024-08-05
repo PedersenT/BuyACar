@@ -1,9 +1,10 @@
-﻿using BuyACar.Models;
+﻿using BuyACar.Models.Car;
 
 namespace BuyACar.Services
 {
     public interface ICarService
     {
-        public Car? GetCarById(int id);
+        Task<Car?> GetCarByIdAsync(int id);
+        Task<Car?> PostCarAsync(CarPostDTO carPostDTO);
     }
 }

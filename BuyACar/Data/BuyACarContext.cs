@@ -1,6 +1,7 @@
 ﻿
 
 using BuyACar.Models;
+using BuyACar.Models.Car;
 using Microsoft.EntityFrameworkCore;
 
 namespace BuyACar.Data
@@ -12,6 +13,9 @@ namespace BuyACar.Data
         {
         }
 
+        
+        public DbSet<Manufacturer> Manufacturer { get; set; } = null!;
+        public DbSet<CarModel> CarModels { get; set; } = null!;
         public DbSet<Car> Cars { get; set; } = null!;
     }
 

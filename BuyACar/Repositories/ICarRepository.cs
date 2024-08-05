@@ -1,5 +1,5 @@
 ﻿using BuyACar.Data;
-using BuyACar.Models;
+using BuyACar.Models.Car;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -7,6 +7,8 @@ namespace BuyACar.Repositories
 {
     public interface ICarRepository
     {
-        Car? GetCarById(int id);
+        Task<Car?> GetCarByIdAsync(int id);
+
+        Task<Car?> PostCarAsync(Car car);
     }
 }
