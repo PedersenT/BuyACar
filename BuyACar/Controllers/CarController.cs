@@ -19,31 +19,42 @@ namespace BuyACar.Controllers
             _carService = carService;
         }
 
-        [HttpGet(Name = "GetCar")]
-        public async Task<Results<Ok<Car>, NotFound>> GetCarById(int id)
+
+        [HttpGet("{id}")]
+        public async Task<Results<Ok<CarRecord>, NotFound>> GetCarById(int id)
         {
-            var car = await _carService.GetCarByIdAsync(id);
-            return car == null ? TypedResults.NotFound() : TypedResults.Ok(car);
+            var carRec = await _carService.GetCarByIdAsync(id);
+            return carRec == null ? TypedResults.NotFound() : TypedResults.Ok(carRec);
         }
 
-        [HttpPost]
-        public async Task<ActionResult<Car>> PostCarAsync([FromBody] CarPostDTO carPostDTO)
+        [HttpGet("/{name}")]
+        public async Task<Results<Ok<CarRecord>, NotFound>> GetCarByName(string name)
         {
-            if (carPostDTO == null)
+            var carRec = await _carService.GetCarByNameAsync(name);
+            return carRec == null ? TypedResults.NotFound() : TypedResults.Ok(carRec);
+        }
+
+
+
+
+        [HttpPost]
+        public async Task<ActionResult<CarRecord>> PostCarAsync([FromBody] Car car)
+        {
+            if (car == null)
             {
                 return BadRequest("Car cannot be null");
             }
 
-            var createdCar = await _carService.PostCarAsync(carPostDTO);
+            var createdCar = await _carService.PostCarAsync(car);
 
             if (createdCar == null)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "A problem happened while handling your request.");
+                return BadRequest("A problem happened while handling your request.");
             }
 
             return CreatedAtAction(
-                nameof(GetCarById),
-                new { id = createdCar.Id },
+                nameof(GetCarByName),
+                new { createdCar.Name },
                 createdCar
             );
 

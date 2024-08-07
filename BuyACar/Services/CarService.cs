@@ -1,4 +1,5 @@
-﻿using BuyACar.Models.Car;
+﻿using BuyACar.Models;
+using BuyACar.Models.Car;
 using BuyACar.Repositories;
 
 namespace BuyACar.Services
@@ -15,41 +16,36 @@ namespace BuyACar.Services
         }
 
 
-        public async Task<Car?> GetCarByIdAsync(int id)
+        public async Task<CarRecord?> GetCarByIdAsync(int id)
         {
             return await _carRepository.GetCarByIdAsync(id);
         }
 
-        public async Task<Car?> PostCarAsync(CarPostDTO carPostDTO)
+        public async Task<CarRecord?> GetCarByNameAsync (string name)
+        {
+            return await _carRepository.GetCarByNameAsync(name);
+        }
+
+        public async Task<CarRecord?> PostCarAsync(Car car)
         {
 
-            //hente carmodel helt ferdig, så gå videre.
-            
-            /*
-            var carModel = await _carModelService.GetCarModelByNameAsync(carPostDTO.CarModelName);
+            CarModel? carModel = await _carModelService.GetCarModelByNameAsync(car.CarModel.Name);
             if (carModel == null)
             {
                 return null;
             }
-            */
-            if (carPostDTO == null)
-            {
-                return null;
-            }
 
-            var car = new Car
+
+            var newCar = new Car
             {
-                Name = carPostDTO.Name,
-                CarModel = carModel.
+                Name = car.Name,
+                CarModel = carModel
             };
+            Console.WriteLine(car);
 
-            var createdCar = _carRepository.PostCarAsync(car);
-            if (createdCar == null)
-            {
-                return null;
-            }
+            var createdCar = await _carRepository.PostCarAsync(car);
 
-            return await _carRepository.PostCarAsync(car);
+            return createdCar;
         }
     }
 }

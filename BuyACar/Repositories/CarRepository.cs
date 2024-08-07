@@ -14,40 +14,52 @@ namespace BuyACar.Repositories
             this.Context = context;
         }
 
-        public async Task<Car?> GetCarByIdAsync(int id)
+        public async Task<CarRecord?> GetCarByIdAsync(int id)
         {
             return await Context.Cars
-                .Include(c => c.CarModel)
-                .ThenInclude(cm => cm.Manufacturer)
-                .FirstOrDefaultAsync(c => c.Id == id);
+                .Where(c => c.Id == id)
+                .Select(c => new CarRecord(
+                    c.Name,
+                    c.CarModel.Name,
+                    c.CarModel.Manufacturer.Name
+                ))
+                .FirstOrDefaultAsync();
+        }
+        public async Task<CarRecord?> GetCarByNameAsync(string name)
+        {
+            return await Context.Cars
+                .Where (c => c.Name == name)
+                .Select(c => new CarRecord(
+                    c.Name,
+                    c.CarModel.Name,
+                    c.CarModel.Manufacturer.Name
+                ))
+                .FirstOrDefaultAsync();
         }
 
-        /*
-        public async Task<Car?> PostCarAsync(Car car)
+
+        public async Task<CarRecord?> PostCarAsync(Car car)
         {
-            await Context.Cars.AddAsync(car);
+            var carModel = Context.CarModels.FirstOrDefault(c => c.Name == car.CarModel.Name);
+            //var carModel = Context.CarModels.Find(1);
+            if (carModel == null)
+            {
+                throw new ArgumentException("Invlaid Car Model");
+            }
+
+            car.CarModel = carModel;
+
+            Context.Cars.Add(car);
             await Context.SaveChangesAsync();
-            return car;
-        }
-        */
-        public async Task<Car?> PostCarAsync(Car car)
-        {
-            try
+
+            var savedCar = Context.Cars.Include(c => c.CarModel).ThenInclude(cm => cm.Manufacturer).FirstOrDefault(c => c.Id == car.Id);
+            if (savedCar == null)
             {
-                await Context.Cars.AddAsync(car);
-                using (var transaction = Context.Database.BeginTransaction())
-                {
-                    await Context.SaveChangesAsync();
-                    transaction.Commit();
-                }
-                return car;
+                throw new InvalidOperationException($"Expected a car with Id {car.Id}, but none was found.");
             }
-            catch (Exception ex)
-            {
-                // Log the exception for debugging
-                Console.WriteLine($"Error saving car: {ex.Message}");
-                return null; // Or handle the error differently
-            }
+
+            return savedCar.ToCarRecord();
+
         }
     }
 }
