@@ -16,29 +16,20 @@ namespace BuyACar.Repositories
 
         public async Task<CarModel?> GetCarModelByNameAsync(string Name)
         {
-            try
-            {
-
-                
-                
-                return await _context.CarModels
-                .FirstOrDefaultAsync(x => x.Name == Name);
-
-            }
-            catch (Exception ex)
-            {
-                // Log the exception for debugging
-                Console.WriteLine($"Error saving car: {ex.Message}");
-                return null; // Or handle the error differently
-            }
+            return await _context.CarModels
+                .AsNoTracking()
+                .Where(x => x.Name.Equals(Name))
+                .FirstOrDefaultAsync();
 
         }
 
-
-
-
-
-
-
     }
+
+
+
+
+
+
+
 }
+

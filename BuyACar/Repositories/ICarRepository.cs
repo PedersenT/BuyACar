@@ -7,8 +7,8 @@ namespace BuyACar.Repositories
 {
     public interface ICarRepository
     {
-        Task<Car?> GetCarByIdAsync(int id);
-
-        Task<Car?> PostCarAsync(Car car);
+        Task<CarRecord?> GetCarByIdAsync(int id);
+        Task<CarRecord?> GetCarByNameAsync(string name);
+        Task<CarRecord?> PostCarAsync(Car car);
     }
 }

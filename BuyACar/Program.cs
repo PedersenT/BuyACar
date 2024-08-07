@@ -15,9 +15,9 @@ builder.Services.AddDbContext<BuyACarContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Services and repositories
-builder.Services.AddTransient<ICarService, CarService>();
+builder.Services.AddScoped<ICarService, CarService>();
 builder.Services.AddScoped<ICarRepository, CarRepository>();
-builder.Services.AddTransient<ICarModelService, CarModelService>();
+builder.Services.AddScoped<ICarModelService, CarModelService>();
 builder.Services.AddScoped<ICarModelRepository, CarModelRepository>();
 
 
