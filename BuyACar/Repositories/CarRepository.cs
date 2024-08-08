@@ -14,11 +14,11 @@ namespace BuyACar.Repositories
             this.Context = context;
         }
 
-        public async Task<CarRecord?> GetCarByFinnIdAsync(int finnId)
+        public async Task<CarDto?> GetCarByFinnIdAsync(int finnId)
         {
             return await Context.Cars
                 .Where(c => c.FinnId == finnId)
-                .Select(c => new CarRecord(
+                .Select(c => new CarDto(
                     c.FinnId, 
                     c.Url,
                     c.SellerType,
@@ -35,7 +35,7 @@ namespace BuyACar.Repositories
         }
 
 
-        public async Task<CarRecord?> PostCarAsync(Car car)
+        public async Task<CarDto?> PostCarAsync(Car car)
         {
             var carModel = Context.CarModels.FirstOrDefault(c => c.Name == car.CarModel.Name);
             if (carModel == null)

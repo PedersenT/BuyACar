@@ -17,7 +17,12 @@ namespace BuyACar.Data
         public DbSet<Manufacturer> Manufacturer { get; set; } = null!;
         public DbSet<CarModel> CarModels { get; set; } = null!;
         public DbSet<Car> Cars { get; set; } = null!;
-    }
 
+       /* protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.
+        }*/
+    }
+     
 
 }

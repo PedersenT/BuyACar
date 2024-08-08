@@ -30,9 +30,9 @@ namespace BuyACar.Models.Car
             CarModel = carModel;
         }
 
-        public CarRecord ToCarRecord()
+        public CarDto ToCarRecord()
         {
-            return new CarRecord(this.FinnId, this.Url, this.SellerType, this.ProductionYear, 
+            return new CarDto(this.FinnId, this.Url, this.SellerType, this.ProductionYear, 
                 this.Color, this.KilometersDriven, this.WheelDrive, this.CarModel.Name, 
                 this.CarModel.Manufacturer.Name, this.CarModel.StorageCapacity, this.CarModel.TrailerWeight);
         }

@@ -16,12 +16,12 @@ namespace BuyACar.Services
         }
 
 
-        public async Task<CarRecord?> GetCarByFinnIdAsync(int finnId)
+        public async Task<CarDto?> GetCarByFinnIdAsync(int finnId)
         {
             return await _carRepository.GetCarByFinnIdAsync(finnId);
         }
 
-        public async Task<CarRecord?> PostCarAsync(Car car)
+        public async Task<CarDto?> PostCarAsync(Car car)
         {
 
             /*CarModel? carModel = await _carModelService.GetCarModelByNameAsync(car.CarModel.Name);

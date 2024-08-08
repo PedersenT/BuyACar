@@ -21,24 +21,16 @@ namespace BuyACar.Controllers
 
 
         [HttpGet("{finnId}")]
-        public async Task<Results<Ok<CarRecord>, NotFound>> GetCarByFinnId(int finnId)
+        public async Task<Results<Ok<CarDto>, NotFound>> GetCarByFinnId(int finnId)
         {
             var carRec = await _carService.GetCarByFinnIdAsync(finnId);
             return carRec == null ? TypedResults.NotFound() : TypedResults.Ok(carRec);
         }
 
-/*        [HttpGet("/{name}")]
-        public async Task<Results<Ok<CarRecord>, NotFound>> GetCarByName(string name)
-        {
-            var carRec = await _carService.GetCarByNameAsync(name);
-            return carRec == null ? TypedResults.NotFound() : TypedResults.Ok(carRec);
-        }*/
-
-
 
 
         [HttpPost]
-        public async Task<ActionResult<CarRecord>> PostCarAsync([FromBody] Car car)
+        public async Task<ActionResult<CarDto>> PostCarAsync([FromBody] Car car)
         {
             if (car == null)
             {
