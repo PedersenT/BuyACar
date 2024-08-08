@@ -14,25 +14,22 @@ namespace BuyACar.Repositories
             this.Context = context;
         }
 
-        public async Task<CarRecord?> GetCarByIdAsync(int id)
+        public async Task<CarRecord?> GetCarByFinnIdAsync(int finnId)
         {
             return await Context.Cars
-                .Where(c => c.Id == id)
+                .Where(c => c.FinnId == finnId)
                 .Select(c => new CarRecord(
-                    c.Name,
+                    c.FinnId, 
+                    c.Url,
+                    c.SellerType,
+                    c.ProductionYear,
+                    c.Color,
+                    c.KilometersDriven,
+                    c.WheelDrive,
                     c.CarModel.Name,
-                    c.CarModel.Manufacturer.Name
-                ))
-                .FirstOrDefaultAsync();
-        }
-        public async Task<CarRecord?> GetCarByNameAsync(string name)
-        {
-            return await Context.Cars
-                .Where (c => c.Name == name)
-                .Select(c => new CarRecord(
-                    c.Name,
-                    c.CarModel.Name,
-                    c.CarModel.Manufacturer.Name
+                    c.CarModel.Manufacturer.Name,
+                    c.CarModel.StorageCapacity,
+                    c.CarModel.TrailerWeight
                 ))
                 .FirstOrDefaultAsync();
         }
@@ -41,7 +38,6 @@ namespace BuyACar.Repositories
         public async Task<CarRecord?> PostCarAsync(Car car)
         {
             var carModel = Context.CarModels.FirstOrDefault(c => c.Name == car.CarModel.Name);
-            //var carModel = Context.CarModels.Find(1);
             if (carModel == null)
             {
                 throw new ArgumentException("Invlaid Car Model");

@@ -1,4 +1,7 @@
 ﻿namespace BuyACar.Models.Car
 {
-    public record CarRecord(string Name, string CarModelName, string ManufacturerName);
+    public record CarRecord(int FinnId, string Url, string SellerType,
+        int ProductionYear, string Color, int KilometersDriven, 
+        string WheelDrive, string CarModelName, string ManufacturerName,
+        int StorageCapacity, int TrailerWeight);
 }

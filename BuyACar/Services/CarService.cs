@@ -16,20 +16,15 @@ namespace BuyACar.Services
         }
 
 
-        public async Task<CarRecord?> GetCarByIdAsync(int id)
+        public async Task<CarRecord?> GetCarByFinnIdAsync(int finnId)
         {
-            return await _carRepository.GetCarByIdAsync(id);
-        }
-
-        public async Task<CarRecord?> GetCarByNameAsync (string name)
-        {
-            return await _carRepository.GetCarByNameAsync(name);
+            return await _carRepository.GetCarByFinnIdAsync(finnId);
         }
 
         public async Task<CarRecord?> PostCarAsync(Car car)
         {
 
-            CarModel? carModel = await _carModelService.GetCarModelByNameAsync(car.CarModel.Name);
+            /*CarModel? carModel = await _carModelService.GetCarModelByNameAsync(car.CarModel.Name);
             if (carModel == null)
             {
                 return null;
@@ -38,10 +33,21 @@ namespace BuyACar.Services
 
             var newCar = new Car
             {
-                Name = car.Name,
+                FinnId = car.Name,
                 CarModel = carModel
-            };
-            Console.WriteLine(car);
+            };*/
+            /*
+            var newCar = new Car
+            {
+                FinnId = car.FinnId,
+                Url = car.Url,
+                SellerType = car.SellerType,
+                ProductionYear = car.ProductionYear,
+                Color = car.Color,
+                KilometersDriven = car.KilometersDriven,
+                WheelDrive = car.WheelDrive,
+                CarModel 
+            };*/
 
             var createdCar = await _carRepository.PostCarAsync(car);
 
