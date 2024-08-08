@@ -20,19 +20,19 @@ namespace BuyACar.Controllers
         }
 
 
-        [HttpGet("{id}")]
-        public async Task<Results<Ok<CarRecord>, NotFound>> GetCarById(int id)
+        [HttpGet("{finnId}")]
+        public async Task<Results<Ok<CarRecord>, NotFound>> GetCarByFinnId(int finnId)
         {
-            var carRec = await _carService.GetCarByIdAsync(id);
+            var carRec = await _carService.GetCarByFinnIdAsync(finnId);
             return carRec == null ? TypedResults.NotFound() : TypedResults.Ok(carRec);
         }
 
-        [HttpGet("/{name}")]
+/*        [HttpGet("/{name}")]
         public async Task<Results<Ok<CarRecord>, NotFound>> GetCarByName(string name)
         {
             var carRec = await _carService.GetCarByNameAsync(name);
             return carRec == null ? TypedResults.NotFound() : TypedResults.Ok(carRec);
-        }
+        }*/
 
 
 
@@ -53,8 +53,8 @@ namespace BuyACar.Controllers
             }
 
             return CreatedAtAction(
-                nameof(GetCarByName),
-                new { createdCar.Name },
+                nameof(GetCarByFinnId),
+                new { createdCar.FinnId },
                 createdCar
             );
 

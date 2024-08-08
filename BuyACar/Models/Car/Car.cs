@@ -8,20 +8,33 @@ namespace BuyACar.Models.Car
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        public string Name { get; set; } = null!;
+        public int FinnId { get; set; }
+        public string Url { get; set; } = null!;
+        public string SellerType { get; set; } = null!;
+        public int ProductionYear { get; set; }
+        public string Color { get; set; } = null!;
+        public int KilometersDriven { get; set; }
+        public string WheelDrive { get; set; } = null!;
         public CarModel CarModel { get; set; } = null!;
 
         public Car() { }
-
-        public Car(string name, CarModel carModel)
+        public Car(int finnId, string url, string sellerType, int productionYear, string color, int kilometersDriven, string wheelDrive, CarModel carModel)
         {
-            Name = name;
+            FinnId = finnId;
+            Url = url;
+            SellerType = sellerType;
+            ProductionYear = productionYear;
+            Color = color;
+            KilometersDriven = kilometersDriven;
+            WheelDrive = wheelDrive;
             CarModel = carModel;
         }
 
         public CarRecord ToCarRecord()
         {
-            return new CarRecord(this.Name, this.CarModel.Name, this.CarModel.Manufacturer.Name);
+            return new CarRecord(this.FinnId, this.Url, this.SellerType, this.ProductionYear, 
+                this.Color, this.KilometersDriven, this.WheelDrive, this.CarModel.Name, 
+                this.CarModel.Manufacturer.Name, this.CarModel.StorageCapacity, this.CarModel.TrailerWeight);
         }
     }
 }

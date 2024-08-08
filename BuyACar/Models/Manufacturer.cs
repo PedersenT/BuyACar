@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace BuyACar.Models
 {
@@ -7,6 +8,7 @@ namespace BuyACar.Models
         [Key]
         public int Id { get; set; }
         public string Name { get; set; } = null!;
+
 
         public Manufacturer() { }
 
